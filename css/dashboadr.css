@@ -23,9 +23,18 @@
 .name{
     padding: 0px 20px;
 }
-.transactionForm{
-    background: lightcoral;
+.transcationForm{
+    background: rgb(156, 70, 70);
 }
 .transactionList{
     background: lightgreen;
+}
+.transactionListItem{
+    display: grid;
+    grid-template-columns: min-content 1fr min-content max-content min-content;
+    column-gap: 20px;
+}
+.listItem{
+    padding: 20px;
+
 }

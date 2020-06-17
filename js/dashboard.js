@@ -10,11 +10,14 @@ var uid = null;
 var transactionForm = document.querySelector(".transactionForm");
 
 var renderTransactions = (transactionArr) => {
+            //setting user current amount
+            finalCostCalculation(transactionArr);
+            //display all transactions
     transactionList.innerHTML= ""
     transactionArr.forEach((transaction,index) =>{
-        var {title,cost,transactionAt,transactionId }=transaction;
+        var {title,cost,transactionAt,transactionId,transactionType }=transaction;
         transactionList.insertAdjacentHTML('beforeend',
-        `<div class="transactionListItem">
+        `<div class='transactionListItem ${transactionType === "income" ? "income" : "expense"}'>
         <div class="renderIndex listItem">
           <h3>${++index}</h3>
         </div>
@@ -61,7 +64,7 @@ var transactionFormSubmission = async (e) => {
         if(title && cost && transactionType && transactionAt){
             var transactionObj = {
                 title,
-                cost,
+                cost: parseInt(cost),
                 transactionType,
                 transactionAt: new Date(transactionAt),
                 transactionBy : uid
@@ -76,6 +79,21 @@ var transactionFormSubmission = async (e) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+var finalCostCalculation = (transArr) => {
+    var amountDiv =document.querySelector(".amount h3")
+    var totalAmount = 0;
+    transArr.forEach((transaction) => {
+        var {cost , transactionType} = transaction;
+        if(transactionType === "income"){
+            totalAmount = totalAmount + cost
+        }else{
+            totalAmount = totalAmount - cost
+        }
+    })
+    console.log(totalAmount)
+    amountDiv.textContent = `${totalAmount} RS`
 }
 
 
